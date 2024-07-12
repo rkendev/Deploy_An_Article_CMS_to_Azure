@@ -94,6 +94,7 @@ def authorized():
 
 @app.route('/logout')
 def logout():
+    # added log info
     app.logger.info('User logged out: %s', current_user.username)
     logout_user()
     if session.get("user"):  # Used MS Login

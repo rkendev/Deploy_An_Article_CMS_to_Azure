@@ -10,7 +10,7 @@ from flask_login import LoginManager
 from flask_session import Session
 import os
 
-# Configure logging
+# Configure logging. added log info
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
