@@ -48,12 +48,6 @@ def post(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # from werkzeug.security import generate_password_hash
-    #
-    # password = "123456"
-    # hashed_password = generate_password_hash(password)
-    # print(hashed_password)
-
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
@@ -100,17 +94,14 @@ def authorized():
 
 @app.route('/logout')
 def logout():
+    app.logger.info('User logged out: %s', current_user.username)
     logout_user()
     if session.get("user"):  # Used MS Login
-        # Wipe out user and its token cache from session
         session.clear()
-        # Also logout from your tenant's web session
         return redirect(
             Config.AUTHORITY + "/oauth2/v2.0/logout" +
             "?post_logout_redirect_uri=" + url_for("login", _external=True))
-
     return redirect(url_for('login'))
-
 
 def _load_cache():
     # Load the cache from `msal`, if it exists
